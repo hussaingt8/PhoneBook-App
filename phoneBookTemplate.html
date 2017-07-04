@@ -1,0 +1,20 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
+			<!--Body content-->
+			<figure class="phonebooks">
+				<li data-ng-repeat="phonebook in phonebooks | filter: contactInfo | orderBy:orderProp" class="thumbnail" style="width:100%">
+					<a data-ng-href="{{phonebook.id}}" class="thumb">
+						<img data-ng-src="{{phonebook.imageUrl}}" src="/" class="img-circle" alt="Contact photo" width="60" height="60">
+					</a><br/>
+					<span>Name: {{phonebook.name}}<br/></span>
+					<span>Tel Number: {{phonebook.number}} <br/></span>
+					<span>City: {{phonebook.city}} <br/></span>
+					<span>email: {{phonebook.email}}</span>
+				</li>
+			</figure>
+		</div>
+	</div>
+</div>
+
+<link rel="stylesheet" href="phoneBook.css"/>

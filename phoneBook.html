@@ -1,0 +1,240 @@
+<!Doctype html>
+<html lang="en-US" data-ng-app = "phonebookApp">
+<head>
+	<meta charset="utf-8" />  
+	<title>Phonebook Application</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="phoneBook.css"/>
+</head>
+<body data-ng-controller = "PhonebookListCtrl">
+		
+	<div class="fade-carousel">
+			<div class="slides">
+				<div class="slide-1"></div>
+				<div class="hero">
+					<hgroup>
+						<h1>Online Contacts</h1>
+						<h2 class="hidden-xs h2">Always have a secure backup of your contact list<br/>Priceless if you lose or switch your phone</h2>
+					</hgroup>
+				</div>
+			</div>
+	</div>
+	
+	<nav class="navbar navbar-default navbar-inverse" style="border-radius: 0">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><img src="contact.png" alt="contactLogo"></a>
+			</div>
+			
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<div class="row visible-xs">
+					<div class="col-xs-12 searchbar">
+						<div class="input-group">
+							<label for="searchxs"></label>
+							<input type="text" class="form-control" placeholder="Search Contacts..." id="searchxs"name="srch-term" 
+										 data-ng-model="query">
+							<div class="input-group-btn">
+								<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-7 col-lg-6 hidden-xs searchbar">
+					<div class="input-group">
+						<label for="search"></label>
+						<input type="text" class="form-control" placeholder="Search Contacts..." id="search" name="srch-term" 
+									 data-ng-model="query">
+						<div class="input-group-btn">
+							<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+						</div>
+					</div>
+				</div>
+				<form name="phonebookform" data-ng-submit="addContact()">
+					<ul class="nav navbar-nav navbar-right">
+						<li class="active"><a href="#">My Contacts</a></li>
+						<li class="dropdown">
+							<a class="dropdown-toggle navbar-right" data-toggle="dropdown" href="#">Add Contact<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<div class="form-group">
+									<label for="name" class="col-sm-12 col-lg-12 col-md-12 control-label">Full Name:</label>
+									<div class="col-sm-10">
+										<input class="contactInput form-control" type="text" data-ng-model="name" id="name" name="name" data-ng-disabled="!edit" 
+													 placeholder="Full Name" data-ng-minlength="3" required />
+										<div class="error" data-ng-show="phonebookform.name.$error.required"> Your name is required. </div>
+										<span style="color:#BAF73C" data-ng-show="phonebookform.name.$dirty && phonebookform.name.$invalid">
+											<span data-ng-show="phonebookform.name.$error.minlength">Name to be atleast 3 letters</span>
+										</span>
+										<hr>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="number" class="col-sm-12 col-md-12 col-lg-12 control-label">Phone Number:</label>
+									<div class="col-sm-10">
+										<input class="contactInput form-control" type="number" data-ng-model="number" id="number" name="number"  
+													 data-ng-disabled="!edit" data-ng-minlength=9 	data-ng-maxlength=14  placeholder="0423103558" required />
+										<div class="error" data-ng-show="phonebookform.number.$error.required">Phone number is required. </div>
+										<span style="color:#BAF73C" data-ng-show="phonebookform.number.$dirty && phonebookform.number.$invalid">
+											<span data-ng-show="phonebookform.number.$error.minlength || phonebookform.number.$error.maxlength ||
+																					phonebookform.number.$error.number">Invalid Phone number.</span>
+										</span>
+										<hr>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="email" class="col-sm-12 col-lg-12 col-md-12 control-label">User Email:</label>
+									<div class="col-sm-10">
+										<input class="contactInput form-control" type="email" data-ng-model="email" id="email" name="email" 
+													 placeholder="sameone@example.com" required />
+										<div>
+											<div class="error" data-ng-show="phonebookform.email.$error.required"> Your Email is required. </div>
+											<span style="color:#BAF73C" data-ng-show="phonebookform.email.$dirty && phonebookform.email.$invalid">
+												<span data-ng-show="phonebookform.email.$error.email">Invalid email address.</span>
+											</span>
+										</div>
+										<hr>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="city" class="col-sm-12 col-lg-12 col-md-12 control-label">City:</label>
+									<div class="col-sm-10">
+										<input class="contactInput form-control" type="text" data-ng-model="city" id="city" placeholder="Current City" />
+										<span data-ng-show="phonebookform.city.$touched" style="color:white">Optional...</span>
+										<hr>
+									</div>
+								</div>
+							
+								<button class="btn btn-success" data-ng-click="editUser('new')">
+									<span class="glyphicon glyphicon-user"></span> New Contact
+								</button>
+								<button type="submit" class="btn btn-success" data-ng-disabled="phonebookform.$invalid" data-ng-click="addContact()">
+									<span class ="glyphicon glyphicon-thumbs-up"></span> Add Contact
+								</button> 
+							</ul>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+	</nav>
+	
+	<div class="container"> 
+		<p>
+			<label for="select">Sort by:</label>
+			<select id="select" data-ng-model="orderProp">
+				<option value="name">Alphabetical</option>
+				<option value="-id">Newest</option>
+				<option value="city">Residence</option>
+			</select>
+		</p>
+	</div>
+	<p></p>
+	
+	<div data-ng-view></div>
+	
+	<div class="hidden-xs container">
+	<table class="table table-striped table-hover table-responsive"> 
+		<thead>
+			<tr>
+				<th scope="col" id="edit">Edit</th>
+				<th scope="col" id="name">Name</th>
+				<th scope="col" id="phoneNumber">Phone Number</th>
+				<th scope="col" id="email">Email</th>
+				<th scope="col" id="city">City</th>
+				<th scope="col" id="remove">Remove</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-ng-repeat="phonebook in phonebooks | filter: query | orderBy:orderProp| offset: currentPage*contactsPerPage 
+													| limitTo: contactsPerPage ">
+				<td class="centered">
+					<button class="btn" data-ng-click="editUser(phonebook.id)" >
+						<span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+					</button>
+				</td>
+				<td class="centered"><a href="#/phonebooks/{{phonebook.number}}">{{phonebook.name}}</a></td>
+				<td class="centered">{{phonebook.number}}</td>
+				<td class="centered">{{phonebook.email}}</td>
+				<td class="centered">{{phonebook.city}}</td>
+				<td class="centered"><span data-ng-click="removeContact(phonebook.number)" style="cursor:pointer">&times;</span></td>
+			</tr>
+		</tbody>
+		<tfoot class="centered">
+			<tr>
+				<td colspan="6">
+					<ul class="pagination">
+						<li data-ng-class="prevPageDisabled()" data-ng-click="prevPage()">
+							<a href="#">Prev</a>
+						</li>
+						<li data-ng-repeat="n in range()" data-ng-class="{active: n == currentPage}" data-ng-click="setPage(n)">
+							<a href="#">{{n+1}}</a>
+						</li>
+						<li data-ng-class="nextPageDisabled()" data-ng-click="nextPage()">
+							<a href="#">Next</a>
+						</li>
+					</ul>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+	</div>
+		
+	<div class="visible-xs container">
+	<table class="table table-striped table-hover table-responsive"> 
+		<thead>
+			<tr>
+				<th scope="col" id="edit">Edit</th>
+				<th scope="col" id="name">Name</th>
+				<th scope="col" id="remove">Remove</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-ng-repeat="phonebook in phonebooks | filter: query | orderBy:orderProp| offset: currentPage*contactsPerPage | limitTo: contactsPerPage ">
+				<td class="centered">
+					<button class="btn" data-ng-click="editUser(phonebook.id)" >
+						<span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+					</button>
+				</td>
+				<td class="centered"><a href="#/phonebooks/{{phonebook.number}}">{{phonebook.name}}</a></td>
+				<td class="centered"><span data-ng-click="removeContact(phonebook.number)" style="cursor:pointer">&times;</span></td>
+			</tr>
+		</tbody>
+		<tfoot class="centered">
+			<tr>
+				<td colspan="3">
+					<ul class="pagination">
+						<li data-ng-class="prevPageDisabled()" data-ng-click="prevPage()">
+							<a href="#">Prev</a>	
+						</li>
+						<li data-ng-repeat="n in range()" data-ng-class="{active: n == currentPage}" data-ng-click="setPage(n)">
+							<a href="#">{{n+1}}</a>
+						</li>
+						<li data-ng-class="nextPageDisabled()" data-ng-click="nextPage()">
+							<a href="#">Next</a>
+						</li>
+					</ul>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+	</div>
+	  
+	<!-- Script Files --> 
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/angular-route.js"></script>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/phoneBook.css"/>
+	<script src="js/app.js"></script>
+
+	</body>
+</html>
